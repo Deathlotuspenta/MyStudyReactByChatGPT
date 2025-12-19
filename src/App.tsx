@@ -49,6 +49,10 @@ function App() {
   }
 
   function searchName(name: string) {
+    if (name === '') {
+      setNameList([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
+      return;
+    }
     const filteredNames = nameList.filter(item => item.name.includes(name));
     if (filteredNames.length > 0) {
       setNameList(filteredNames);

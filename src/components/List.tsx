@@ -1,14 +1,19 @@
 import React, { useState } from "react"
-const userNameList = ["Tom", "Jack", "Rose"]
 
-const List: React.FC = () => {
+
+const List: React.FC<{nameList: {id:number,name:string}[],removeName: (id: number) => void}> = ({nameList, removeName}) => {
 
     return (
         <div>
             {/* <button onClick={()=> setIsHidden(!isHidden)}>是否显示</button>     */}
             <ul>
-                {userNameList.map(username => (
-                    <li key={username}>{username}</li>
+                {nameList.map(name => (
+                    <li key={name.id}>
+                        {name.name}
+                        <button style={{marginLeft: '10px'}} onClick={() => {
+                            removeName(name.id)
+                        }}>删除</button>
+                    </li>
                 ))}
             </ul>
 

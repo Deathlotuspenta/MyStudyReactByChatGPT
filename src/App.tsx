@@ -22,8 +22,10 @@ function App() {
     setNameList(prev => [...prev, {id,name}]);
   }
 
-  function removeName(id: number) {
-    setNameList(prev => prev.filter(name => name.id !== id));
+  function removeName(id: number): boolean {
+    let removed = nameList.some(name => name.id === id);
+    setNameList(prev => prev.filter(name => {return name.id !== id}));
+    return removed;
   }
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 
-const List: React.FC<{nameList: {id:number,name:string}[],removeName: (id: number) => void}> = ({nameList, removeName}) => {
+const List: React.FC<{nameList: {id:number,name:string}[],removeName: (id: number) => boolean}> = ({nameList, removeName}) => {
 
     return (
         <div>
@@ -11,7 +11,12 @@ const List: React.FC<{nameList: {id:number,name:string}[],removeName: (id: numbe
                     <li key={name.id}>
                         {name.name}
                         <button style={{marginLeft: '10px'}} onClick={() => {
-                            removeName(name.id)
+                            let isSucces = removeName(name.id);
+                            console.log(isSucces);
+                            if (isSucces) {
+                                alert(`删除${name.name}成功`);
+                            }
+                                
                         }}>删除</button>
                     </li>
                 ))}

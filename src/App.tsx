@@ -22,7 +22,7 @@ function App() {
     setNameList(prev => [...prev, { id, name }]);
   }
 
-  function removeName(id: number): boolean {S
+  function removeName(id: number): boolean {
     const removedItem = nameList.find(item => item.id === id);
     if (!removedItem) return false;
 

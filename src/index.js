@@ -3,17 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Header from './Header.tsx';
-import List  from './List.tsx';
-import Foot from "./Foot.tsx"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <Header />
-    <List />
-    <Foot></Foot>
   </React.StrictMode>
 );
 

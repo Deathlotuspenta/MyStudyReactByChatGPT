@@ -7,10 +7,15 @@ import { useState } from 'react';
 
 function App() {
   const [showList,setShowList] = useState(false);
+
+
+function changeIsHidden(value) {
+  setShowList(!value);
+}
+
   return (
     <div className="App">
-      <button onClick={() => setShowList(!showList)}>{showList ? '隐藏' : '显示'}</button>
-      <Header />
+      <Header showList={showList} onToggle={changeIsHidden} />
       {showList && <List />}
       <Foot />
     </div>

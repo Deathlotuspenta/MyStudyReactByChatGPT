@@ -22,13 +22,8 @@ function App() {
     setNameList(prev => [...prev, { id, name }]);
   }
 
-function removeName(id: number, callback?: (success: boolean) => void) {
-  setNameList(prev => {
-    const exists = prev.some(item => item.id === id);
-    const newList = prev.filter(item => item.id !== id);
-    if (callback) callback(exists);
-    return newList;
-  });
+function removeName(id: number) {
+  setNameList(prev => prev.filter(item => item.id !== id));
 }
 
 

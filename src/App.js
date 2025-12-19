@@ -15,7 +15,7 @@ function changeIsHidden(value) {
 
   return (
     <div className="App">
-      <Header showList={showList} onToggle={changeIsHidden} />
+      <Header showList={showList} changeIsHidden={changeIsHidden} />
       {showList && <List />}
       <Foot />
     </div>

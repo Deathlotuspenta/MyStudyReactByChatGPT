@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 
 function App() {
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState(true);
   const [nameList, setNameList] = useState([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
 
 
@@ -19,12 +19,18 @@ function App() {
 
 
   function addName(id: number, name: string) {
-    setNameList(prev => [...prev, {id,name}]);
+    setNameList(prev => [...prev, { id, name }]);
   }
 
   function removeName(id: number): boolean {
-    let removed = nameList.some(name => name.id === id);
-    setNameList(prev => prev.filter(name => {return name.id !== id}));
+    let removed = false;
+    setNameList(prev => prev.filter(item => {
+      if (item.id === id) {
+        removed = true;
+        return false;
+      }
+      return true;
+    }));
     return removed;
   }
 

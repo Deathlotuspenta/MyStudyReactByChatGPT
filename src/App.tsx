@@ -8,6 +8,7 @@ import { useState } from 'react';
 function App() {
   const [showList, setShowList] = useState(true);
   const [nameList, setNameList] = useState([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
+  const [userInputName, setUserInputName] = useState('');
   const [lastRemovedName, setLastRemovedName] = useState<string | null>(null);
 
   function changeIsHidden() {
@@ -36,18 +37,36 @@ function App() {
   }
 
 
-
   return (
     <div className="App">
 
       {lastRemovedName && <div className='removedName'>上次删除的名字是: {lastRemovedName}</div>}
+      <hr />
 
       <div className='addNameButton'>
         <button onClick={() => addName(nameList.length + 1, '赵六')}>添加名字</button>
       </div>
+      <hr />
 
+      {/* value 是清空输入框的关键！！如果没有绑定着无法清空输入框 */}
+      <input type="text" placeholder='请输入要添加的名字' value={userInputName} onChange={(e) => setUserInputName(e.target.value)} />
+      <button onClick={() => {
+        if (userInputName.trim() === '') {
+          alert('名字不能为空');
+          return;
+        }
+        addName(nameList.length + 1, userInputName.trim());
+        // 用于清空输入框
+        setUserInputName('');
+      }}>
+        添加名字
+      </button>
+
+      <hr />
       <Header showList={showList} changeIsHidden={changeIsHidden} />
-      {showList && <List nameList={nameList} removeName={removeName} />}
+      {showList && (nameList.length > 0 ? <List nameList={nameList} removeName={removeName} /> : <div>暂无数据</div>)}
+
+      <hr />
       <Foot />
     </div>
   );

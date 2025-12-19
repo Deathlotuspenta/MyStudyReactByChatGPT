@@ -22,19 +22,16 @@ function App() {
     setNameList(prev => [...prev, { id, name }]);
   }
 
-  function removeName(id: number): boolean {
+  function removeName(id: number): boolean {S
     const removedItem = nameList.find(item => item.id === id);
-    
-    const confirmDelete = window.confirm(`确定要删除${removedItem?.name}吗？`);
-    if (!confirmDelete) {
-      return false;
-    }
-    setNameList(prev => {
-      return prev.filter(item => item.id !== id);
-    });
-    if (removedItem) {
-      setLastRemovedName(removedItem.name);
-    }
+    if (!removedItem) return false;
+
+    const confirmDelete = window.confirm(`确定要删除${removedItem.name}吗？`);
+    if (!confirmDelete) return false;
+
+    setNameList(prev => prev.filter(item => item.id !== id));
+    setLastRemovedName(removedItem.name);
+
     return true;
   }
 

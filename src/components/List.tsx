@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 
 
 const List: React.FC<{nameList: {id:number,name:string}[],removeName: (id: number) => boolean}> = ({nameList, removeName}) => {

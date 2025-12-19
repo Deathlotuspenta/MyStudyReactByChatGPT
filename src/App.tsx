@@ -22,17 +22,14 @@ function App() {
     setNameList(prev => [...prev, { id, name }]);
   }
 
-  function removeName(id: number): boolean {
-    let removed = false;
-    setNameList(prev => prev.filter(item => {
-      if (item.id === id) {
-        removed = true;
-        return false;
-      }
-      return true;
-    }));
-    return removed;
-  }
+function removeName(id: number, callback?: (success: boolean) => void) {
+  setNameList(prev => {
+    const exists = prev.some(item => item.id === id);
+    const newList = prev.filter(item => item.id !== id);
+    if (callback) callback(exists);
+    return newList;
+  });
+}
 
 
   return (

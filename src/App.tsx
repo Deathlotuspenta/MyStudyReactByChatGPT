@@ -11,15 +11,16 @@ function App() {
   const [nameList, setNameList] = useState([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
   const [userInputName, setUserInputName] = useState('');
   const [lastRemovedName, setLastRemovedName] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   function addNameButton(id: number, name: string) {
     if (name.trim() === '') {
-          alert('名字不能为空');
-          return;
-        }
-        addName(id + 1, name.trim());
-        // 用于清空输入框
-        setUserInputName('');
+      alert('名字不能为空');
+      return;
+    }
+    addName(id + 1, name.trim());
+    // 用于清空输入框
+    setUserInputName('');
   }
 
   function changeIsHidden() {
@@ -47,6 +48,20 @@ function App() {
     return true;
   }
 
+  function searchName(name: string) {
+    const filteredNames = nameList.filter(item => item.name.includes(name));
+    if (filteredNames.length > 0) {
+      setNameList(filteredNames);
+    } else {
+      alert('未找到匹配的名字');
+    }
+  }
+
+  function resetSearch() {
+    // 重置搜索
+    setSearchQuery('');
+    setNameList([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
+  }
 
   return (
     <div className="App">
@@ -62,17 +77,33 @@ function App() {
       {/* value 是清空输入框的关键！！如果没有绑定着无法清空输入框 */}
       <input type="text" placeholder='请输入要添加的名字' value={userInputName} onChange={(e) => setUserInputName(e.target.value)}
         onKeyDown={(e) => {
-          if(e.key === 'Enter'){
-              addNameButton(nameList.length + 1, userInputName);
+          if (e.key === 'Enter') {
+            addNameButton(nameList.length + 1, userInputName);
           }
         }}
-       />
+      />
       <button onClick={() => {
-        
+        addNameButton(nameList.length + 1, userInputName);
       }}>
         添加名字
       </button>
 
+      <hr />
+      <div className='searchBox'>
+        <input type="text" placeholder='请输入要搜索的名字' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => { e.key === 'Enter' && searchName(searchQuery) }}
+        />
+        <button onClick={() => {
+          searchName(searchQuery);
+        }}>
+          搜索
+        </button>
+        <button style={{ marginLeft: '10px' }} onClick={() => {
+          resetSearch();
+        }}>
+          重置
+        </button>
+      </div>
       <hr />
       <Header showList={showList} changeIsHidden={changeIsHidden} />
       {showList && (nameList.length > 0 ? <List nameList={nameList} removeName={removeName} /> : <div>暂无数据</div>)}

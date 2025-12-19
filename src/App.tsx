@@ -8,7 +8,7 @@ import { useState } from 'react';
 function App() {
   const [showList, setShowList] = useState(true);
   const [nameList, setNameList] = useState([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
-
+  const [lastRemovedName, setLastRemovedName] = useState<string | null>(null);
 
   function changeIsHidden() {
     // react中状态更新不是立刻生效的，是异步的
@@ -22,13 +22,28 @@ function App() {
     setNameList(prev => [...prev, { id, name }]);
   }
 
-function removeName(id: number) {
-  setNameList(prev => prev.filter(item => item.id !== id));
-}
+  function removeName(id: number): boolean {
+    const removedItem = nameList.find(item => item.id === id);
+    
+    const confirmDelete = window.confirm(`确定要删除${removedItem?.name}吗？`);
+    if (!confirmDelete) {
+      return false;
+    }
+    setNameList(prev => {
+      return prev.filter(item => item.id !== id);
+    });
+    if (removedItem) {
+      setLastRemovedName(removedItem.name);
+    }
+    return true;
+  }
+
 
 
   return (
     <div className="App">
+
+      {lastRemovedName && <div className='removedName'>上次删除的名字是: {lastRemovedName}</div>}
 
       <div className='addNameButton'>
         <button onClick={() => addName(nameList.length + 1, '赵六')}>添加名字</button>

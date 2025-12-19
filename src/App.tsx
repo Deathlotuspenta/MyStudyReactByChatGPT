@@ -5,11 +5,22 @@ import Foot from './components/Foot.tsx';
 import { useState } from 'react';
 
 
+
 function App() {
   const [showList, setShowList] = useState(true);
   const [nameList, setNameList] = useState([{ id: 1, name: '张三' }, { id: 2, name: '李四' }, { id: 3, name: '王五' }]);
   const [userInputName, setUserInputName] = useState('');
   const [lastRemovedName, setLastRemovedName] = useState<string | null>(null);
+
+  function addNameButton(id: number, name: string) {
+    if (name.trim() === '') {
+          alert('名字不能为空');
+          return;
+        }
+        addName(id + 1, name.trim());
+        // 用于清空输入框
+        setUserInputName('');
+  }
 
   function changeIsHidden() {
     // react中状态更新不是立刻生效的，是异步的
@@ -49,15 +60,15 @@ function App() {
       <hr />
 
       {/* value 是清空输入框的关键！！如果没有绑定着无法清空输入框 */}
-      <input type="text" placeholder='请输入要添加的名字' value={userInputName} onChange={(e) => setUserInputName(e.target.value)} />
+      <input type="text" placeholder='请输入要添加的名字' value={userInputName} onChange={(e) => setUserInputName(e.target.value)}
+        onKeyDown={(e) => {
+          if(e.key === 'Enter'){
+              addNameButton(nameList.length + 1, userInputName);
+          }
+        }}
+       />
       <button onClick={() => {
-        if (userInputName.trim() === '') {
-          alert('名字不能为空');
-          return;
-        }
-        addName(nameList.length + 1, userInputName.trim());
-        // 用于清空输入框
-        setUserInputName('');
+        
       }}>
         添加名字
       </button>
